@@ -4,9 +4,10 @@ import Blog from './containers/Blog/Blog';
 import {connect} from 'react-redux';
 const Auth = lazy(() => import('./containers/Auth/Auth'));
 const Logout = lazy(()=>import('./containers/Auth/Logout/Logout'));
+const Editpost = lazy(()=>import('./components/Editpost/Editpost'));
 
 class App extends Component {
- 
+  
   render(){
     let routes=null;
     routes=(
@@ -20,7 +21,8 @@ class App extends Component {
       <Switch>
         <Route path="/login"  render={props => <Auth {...props} />} />
         <Route path="/logout" render={() =><Logout/>} />
-        <Route path="/"  component={Blog} />
+        <Route path="/post/:id"  render={props => <Editpost {...props}/> }/>
+        <Route path="/"   component={Blog} />
       </Switch>);
     }
 
@@ -42,5 +44,6 @@ const mapStateToProps=state=>{
     isAuthenticated:state.token !== null
   }
 }
+
 export default withRouter(connect(mapStateToProps)(App));
 

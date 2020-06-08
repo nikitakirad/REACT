@@ -7,10 +7,14 @@ const newPost=(props)=>{
                     <Modal.Header>Add the post</Modal.Header>
                     <Modal.Content>
                     <Modal.Description>
-                        <label>TITLE:</label><br></br>
+                        <label><span style={{color: "red"}}>*</span>TITLE:</label><br></br>
                         <Input name="title" onChange={props.onInputChange} /><br></br><br></br>
-                        <label>CONTENT:</label><br></br>
+                        <label><span style={{color: "red"}} >*</span>CONTENT:</label><br></br>
                         <TextArea rows="4" onChange={props.onInputChange} name="content" /><br></br><br></br>
+                        <label><span style={{color: "red"}}>*</span>AUTHOR:</label><br></br>
+                        <Input name="author" onChange={props.onInputChange} /><br></br><br></br>
+                        <label>AGE:</label><br></br>
+                        <Input name="age" onChange={props.onInputChange} /><br></br><br></br>
                         <Button color="grey" onClick={props.savedDataToServer}>Add</Button> 
                     </Modal.Description>
                     </Modal.Content>
