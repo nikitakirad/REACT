@@ -1,8 +1,5 @@
 export {
     auth,
-    logout,
-    //authCheckState
+    logout
 } from './auth';
-export {
-    fetchOrders
-}from './getdata';
+

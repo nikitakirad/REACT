@@ -68,9 +68,13 @@ class blog extends Component{
                 .then( response => {
                     // console.log( response.data );
                     alert("Successfully added...");
-                    this.setState(previousstate=>(
-                        previousstate.fetchedposts.push({...postdata,id:response.data.name})
-                    ));
+                    let data=[...this.state.fetchedposts];
+                    
+                    console.log(data);
+                    data.push({...postdata,id:response.data.name})
+                    this.setState({
+                        fetchedposts:data})
+                    ;
                     // console.log(this.state.fetchedposts);
                 } )}
             else{
