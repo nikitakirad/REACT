@@ -138,27 +138,9 @@ class blog extends Component{
             }
             </Sidebar>
             <Sidebar.Pusher inverted dimmed={this.state.menuVisible}>
-                {/* <Segment inverted> */}
-                    {/* //</Sidebar.Pusher><Menu inverted pointing secondary> */}
-                    {/* {this.props.isAuthenticated ?
-                    (<Menu.Item position="right">
-                        <Button  color="grey" as={Link} to ='/'>Posts</Button>
-                        <Button  color="grey" as={Link} to ='/logout'>Log out</Button>
-                    </Menu.Item>) :
-                    (<Menu.Item position="right">
-                        <Button  color="grey" as={Link} to ='/login'>Log In</Button>
-                    </Menu.Item>)
-            } */}
-            {/* //</Menu>
-            //</Sidebar.Pushable></Segment> */}
             <Segment textAlign="center">
                 <Newpost onInputChange={(event)=>this.inputHandler(event)}
                 savedDataToServer={this.savedDataToServerHandler}/><br></br>
-                {/* <Allposts posts={this.state.fetchedposts} 
-                deletepost={this.deleteHandler}
-                editpost={this.editHandler}
-                edit={this.updateValueToServer}
-                clicked={this.postSelectedHandler}/> */}
                 {allpost}
             </Segment>
             </Sidebar.Pusher>
