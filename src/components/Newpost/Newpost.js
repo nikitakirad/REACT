@@ -3,7 +3,7 @@ import {Button,TextArea,Modal,Input} from 'semantic-ui-react';
 const newPost=(props)=>{
     return(
             <>
-                <Modal trigger={<Button >New post</Button>}>
+                <Modal trigger={<Button onClick={props.open}>New post</Button>}>
                     <Modal.Header>Add the post</Modal.Header>
                     <Modal.Content>
                     <Modal.Description>

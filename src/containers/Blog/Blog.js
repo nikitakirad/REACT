@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Allposts from '../../components/Allposts/Allposts';
 import {Menu,Segment,Icon,Sidebar,Loader,Dimmer} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
-import Axios from '../../axios-orders';
+import Axios from '../../axios-instance';
 import Validation from '../../components/Validation/Validation';
 class blog extends Component{
     state={
@@ -17,12 +17,15 @@ class blog extends Component{
         },
         fetchedposts:[],
         menuVisible: false,
-        loading:false
+        loading:false,
+        modalOpen:false
     }
     componentDidMount(){
-        if(this.props.isAuthenticated){
+        const token=localStorage.getItem('token');
+        const userId=localStorage.getItem('userId');
+        if(token){
             this.setState({loading:true});
-            const queryParams = '?auth=' + this.props.isAuthenticated + '&orderBy="userId"&equalTo="' + this.props.userid + '"';
+            const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"';
             
             Axios.get('/posts.json' +queryParams)
             .then( response => {
@@ -47,6 +50,10 @@ class blog extends Component{
             })
         }
     }
+    handleOpen = () => this.setState({ modalOpen: true })
+
+    handleClose = () => this.setState({ modalOpen: false });
+
     inputHandler=(event)=>{
         let updatedPost={...this.state.post};
         updatedPost[event.target.name]=event.target.value;
@@ -56,27 +63,21 @@ class blog extends Component{
     savedDataToServerHandler=()=>{
         if(this.props.isAuthenticated){
             const postdata={...this.state.post,userId:this.props.userid};
-            
-            console.log(postdata);
             let valid='';
             valid=Validation(postdata);
             if(valid){
-                console.log(valid);
                 Axios.post('/posts.json?auth=' + this.props.isAuthenticated,postdata)
                 .then( response => {
-                    
                     alert("Successfully added...");
                     let data=[...this.state.fetchedposts];
-                    
-                    console.log(data);
                     data.push({...postdata,id:response.data.name})
                     this.setState({
-                        fetchedposts:data})
-                    ;
-                    
-                } )}
+                        fetchedposts:data});
+                        this.props.history.push('/login');
+                } )
+                this.handleClose();
+            }
             else{
-                console.log(valid);
                 alert('please fill all required fields');
             }}
         else{
@@ -84,7 +85,6 @@ class blog extends Component{
         }
     }
     deleteHandler=(id)=>{
-        console.log(id);
         if(window.confirm('Are you sure you want to delete?') === true){
         Axios.delete(`posts/${id}.json`)
             .then(response =>{
@@ -109,13 +109,10 @@ class blog extends Component{
         edit={this.updateValueToServer}
         clicked={this.postSelectedHandler}/>
         if(this.state.loading){
-            console.log("loading")
             allpost= 
             <Dimmer active inverted>
               <Loader inverted>Loading</Loader>
             </Dimmer>
-            
-            console.log(allpost)
         }
     return(
         <div>
@@ -140,7 +137,8 @@ class blog extends Component{
             <Sidebar.Pusher inverted dimmed={this.state.menuVisible}>
             <Segment textAlign="center">
                 <Newpost onInputChange={(event)=>this.inputHandler(event)}
-                savedDataToServer={this.savedDataToServerHandler}/><br></br>
+                savedDataToServer={this.savedDataToServerHandler}
+                open={this.handleOpen}/><br></br>
                 {allpost}
             </Segment>
             </Sidebar.Pusher>
@@ -150,7 +148,6 @@ class blog extends Component{
 }
 }
 const mapStateToProps= state =>{
-    console.log(state);
     return{
         isAuthenticated:state.token,
         userid:state.userId

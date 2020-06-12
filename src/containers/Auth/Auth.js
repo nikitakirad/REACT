@@ -97,7 +97,7 @@ class Auth extends Component {
                     <label>Email:</label><br></br>
                     <Input name="email" onChange={this.inputChangedHandler} /><br></br><br></br>
                     <label>Password:</label><br></br>
-                    <Input name="password" onChange={this.inputChangedHandler} /><br></br><br></br>
+                    <Input type="password" name="password" onChange={this.inputChangedHandler} /><br></br><br></br>
                     <Button color="grey">LOGIN</Button>
                     
                     </form>

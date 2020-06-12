@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button,TextArea,Modal,Input} from 'semantic-ui-react';
+import {Button,Modal} from 'semantic-ui-react';
 const allinfoofparticularpost=(props)=>{
     return(
             <>

@@ -1,6 +1,5 @@
 import React from 'react';
 import {Card,Button,Segment, Container} from 'semantic-ui-react';
-import Editpost from '../Editpost/Editpost';
 import Allinfoofparticularpost from '../AllInfoOfParticularPost/AllInfoOfParticularPost';
 const allPosts=(props)=>{
         let post=<Container textAlign="center">

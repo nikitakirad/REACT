@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {Button,TextArea,Modal,Input, Segment, Container,Menu,Icon,Sidebar, Header} from 'semantic-ui-react';
+import {Button,TextArea,Input, Segment, Container,Menu,Icon,Sidebar, Header} from 'semantic-ui-react';
 import Validation from '../Validation/Validation';
-import Axios from '../../axios-orders';
+import Axios from '../../axios-instance';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 class editPost extends Component{
@@ -11,28 +11,22 @@ class editPost extends Component{
     componentDidMount(){
         Axios.get(`posts/${this.props.match.params.id}.json`)
         .then(response=>{
-            console.log(response.data);
             this.setState({loadedData:{...response.data}});
-            console.log(this.state.loadedData);
         });
     }
     inputHandler=(event)=>{
         let updatedPost={...this.state.loadedData};
         updatedPost[event.target.name]=event.target.value;
         this.setState({loadedData:updatedPost});
-        console.log(this.state.loadedData);
     }
     savedUpdatedDataToServerHandler=()=>{
         let valid=false;
         valid=Validation(this.state.loadedData);
-        console.log(valid);
         if(valid){
         Axios.patch(`posts/${this.props.match.params.id}.json`,this.state.loadedData)
     .then( response => {
-         console.log( response.data );
         alert("Successfully updated...");
-        
-        console.log(this.state.loadedData);
+        this.props.history.push('/');
     } )}
     else{
         alert('Please fill out required fields');
@@ -84,7 +78,6 @@ class editPost extends Component{
 
 
     const mapStateToProps= state =>{
-        console.log(state);
         return{
             isAuthenticated:state.token,
             userid:state.userId
