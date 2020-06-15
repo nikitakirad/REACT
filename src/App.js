@@ -3,9 +3,6 @@ import {withRouter,Route} from 'react-router-dom'
 import Blog from './containers/Blog/Blog';
 import {connect} from 'react-redux';
 import * as actions from './store/actions/index';
-const Auth = lazy(() => import('./containers/Auth/Auth'));
-const Logout = lazy(()=>import('./containers/Auth/Logout/Logout'));
-const Editpost = lazy(()=>import('./components/Editpost/Editpost'));
 
 class App extends Component {
   componentDidMount () {
@@ -16,15 +13,17 @@ class App extends Component {
     let dynamicRoutesArray=null;
     let dynamicRoutes=null;
     dynamicRoutesArray=[
-      {path:"/",component:Blog},
-      {path:"/login", component:Auth},
-      {path:"/logout", component:Logout},
-      {path:"/post/:id", component:Editpost},
+      {path:"/",component:"./containers/Blog/Blog"},
+      {path:"/login", component:'./containers/Auth/Auth'},
+      {path:"/logout", component:'./containers/Auth/Logout/Logout'},
+      {path:"/post/:id", component:'./components/Editpost/Editpost'},
     ];
     dynamicRoutes=dynamicRoutesArray.map(route=>{
       let c=null;
+      
       if(route.path==='/' || route.path==='/login'){
-      c=<Route path={route.path} component={route.component} exact/>}
+        let lazyRoutes=lazy(()=>import(`${route.component}`));
+        c=<Route path={route.path} component={lazyRoutes} exact/>}
       else{        
         c=<Route path={route.path} component={Blog} exact />
       }
@@ -32,7 +31,8 @@ class App extends Component {
     });
     if(this.props.isAuthenticated){
       dynamicRoutes=dynamicRoutesArray.map(route=>{
-        return <Route path={route.path} component={route.component} exact/>
+        let lazyRoutes=lazy(() => import(`${route.component}`));
+        return <Route path={route.path} component={lazyRoutes} exact/>
     });}
     return (
       

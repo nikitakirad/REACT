@@ -64,7 +64,7 @@ class editPost extends Component{
                             <label><span style={{color: "red"}}>*</span>AUTHOR:</label><br></br>
                             <Input name="author" value={this.state.loadedData.author} onChange={this.inputHandler}/><br></br><br></br>
                             <label>AGE:</label><br></br>
-                            <Input name="age"  value={this.state.loadedData.age} onChange={this.inputHandler}/><br></br><br></br>
+                            <Input type="number" name="age"  value={this.state.loadedData.age} onChange={this.inputHandler}/><br></br><br></br>
                             <Button color="grey" onClick={this.savedUpdatedDataToServerHandler}>
                                 Update
                             </Button >

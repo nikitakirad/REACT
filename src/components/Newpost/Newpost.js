@@ -14,7 +14,7 @@ const newPost=(props)=>{
                         <label><span style={{color: "red"}}>*</span>AUTHOR:</label><br></br>
                         <Input name="author" onChange={props.onInputChange} /><br></br><br></br>
                         <label>AGE:</label><br></br>
-                        <Input name="age" onChange={props.onInputChange} /><br></br><br></br>
+                        <Input type="number" name="age" onChange={props.onInputChange} /><br></br><br></br>
                         <Button color="grey" onClick={props.savedDataToServer}>Add</Button> 
                     </Modal.Description>
                     </Modal.Content>
